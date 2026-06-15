@@ -1,0 +1,22 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<h1>Add SubCategory</h1>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button type="submit"
+            class="btn btn-success">
+
+        Add SubCategory
+
+    </button>
+
+</form>
+
+{% endblock %}

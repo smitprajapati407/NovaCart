@@ -1,0 +1,147 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<div class="order-header">
+
+```
+<h1>
+    Order #{{ order.id }}
+</h1>
+
+<span class="status-badge
+    {% if order.status == 'Pending' %}pending
+    {% elif order.status == 'Packed' %}packed
+    {% elif order.status == 'Shipped' %}shipped
+    {% elif order.status == 'Delivered' %}delivered
+    {% endif %}">
+    {{ order.status }}
+</span>
+```
+
+</div>
+
+<div class="order-grid">
+
+```
+<div class="info-card">
+
+    <h3>
+        Customer Information
+    </h3>
+
+    <p>
+        <strong>Name:</strong>
+        {{ order.full_name }}
+    </p>
+
+    <p>
+        <strong>Phone:</strong>
+        {{ order.phone }}
+    </p>
+
+    <p>
+        <strong>User:</strong>
+        {{ order.user.username }}
+    </p>
+
+</div>
+
+<div class="info-card">
+
+    <h3>
+        Delivery Address
+    </h3>
+
+    <p>
+        {{ order.address }}
+    </p>
+
+    <p>
+        {{ order.city }},
+        {{ order.state }}
+    </p>
+
+    <p>
+        {{ order.pincode }}
+    </p>
+
+</div>
+```
+
+</div>
+
+<div class="info-card mt-4">
+
+```
+<h3>
+    Ordered Products
+</h3>
+
+<div class="admin-table">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for item in order.items.all %}
+
+            <tr>
+
+                <td>
+                    {{ item.product.name }}
+                </td>
+
+                <td>
+                    {{ item.quantity }}
+                </td>
+
+                <td>
+                    ₹{{ item.price }}
+                </td>
+
+                <td>
+                    ₹{{ item.get_total }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+```
+
+</div>
+
+<div class="order-summary">
+
+```
+<h2>
+    Grand Total
+</h2>
+
+<h1>
+    ₹{{ order.total_price }}
+</h1>
+```
+
+</div>
+
+{% endblock %}

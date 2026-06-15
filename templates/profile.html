@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="profile-page">
+
+
+<div class="profile-banner">
+
+    <div class="profile-avatar">
+        {{ user.username|first|upper }}
+    </div>
+
+    <div class="profile-user-info">
+
+        <h2>
+            {{ user.username }}
+        </h2>
+
+        <p>
+            {{ user.email }}
+        </p>
+
+    </div>
+
+</div>
+
+<div class="profile-actions">
+
+    <a href="{% url 'my_orders' %}" class="profile-box">
+
+        <div class="profile-icon">📦</div>
+
+        <h4>My Orders</h4>
+
+        <p>Track your orders</p>
+
+    </a>
+
+    <a href="{% url 'wishlist' %}" class="profile-box">
+
+        <div class="profile-icon">❤️</div>
+
+        <h4>Wishlist</h4>
+
+        <p>Saved products</p>
+
+    </a>
+
+    <a href="{% url 'cart' %}" class="profile-box">
+
+        <div class="profile-icon">🛒</div>
+
+        <h4>My Cart</h4>
+
+        <p>Items in cart</p>
+
+    </a>
+
+    <a href="{% url 'logout' %}" class="profile-box logout-box">
+
+        <div class="profile-icon">🚪</div>
+
+        <h4>Logout</h4>
+
+        <p>Sign out securely</p>
+
+    </a>
+
+</div>
+
+
+</div>
+
+{% endblock %}

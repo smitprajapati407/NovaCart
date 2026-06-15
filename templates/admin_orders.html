@@ -1,0 +1,150 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<div class="admin-header">
+
+```
+<h1>
+    Manage Orders
+</h1>
+```
+
+</div>
+
+<div class="admin-table">
+
+```
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>Order ID</th>
+
+            <th>Customer</th>
+
+            <th>Total</th>
+
+            <th>Status</th>
+
+            <th>Date</th>
+
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for order in orders %}
+
+        <tr>
+
+            <td>
+                #{{ order.id }}
+            </td>
+
+            <td>
+                {{ order.full_name }}
+            </td>
+
+            <td>
+                ₹{{ order.total_price }}
+            </td>
+
+            <td>
+
+                <form method="POST"
+                      action="{% url 'update_order_status' order.id %}">
+
+                    {% csrf_token %}
+
+                    <select
+                        name="status"
+                        class="status-select"
+                        onchange="this.form.submit()">
+
+                        <option value="Pending"
+                        {% if order.status == 'Pending' %}
+                        selected
+                        {% endif %}>
+                            Pending
+                        </option>
+
+                        <option value="Packed"
+                        {% if order.status == 'Packed' %}
+                        selected
+                        {% endif %}>
+                            Packed
+                        </option>
+
+                        <option value="Shipped"
+                        {% if order.status == 'Shipped' %}
+                        selected
+                        {% endif %}>
+                            Shipped
+                        </option>
+
+                        <option value="Delivered"
+                        {% if order.status == 'Delivered' %}
+                        selected
+                        {% endif %}>
+                            Delivered
+                        </option>
+
+                    </select>
+
+                </form>
+
+            </td>
+
+            <td>
+                {{ order.created_at|date:"d M Y" }}
+            </td>
+
+            <td>
+
+                <a href="{% url 'order_details' order.id %}"
+                   class="view-btn">
+
+                    View
+
+                </a>
+
+                <a href="{% url 'delete_order' order.id %}"
+                   class="delete-btn"
+                   onclick="return confirm('Delete this order?')">
+
+                    Delete
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="6">
+
+                No Orders Found
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+```
+
+</div>
+
+{% endblock %}
