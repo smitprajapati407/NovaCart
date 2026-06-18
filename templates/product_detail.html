@@ -2,34 +2,158 @@
 
 {% block content %}
 
-<div class="row mb-5">
+
+
+<div class="product-detail-layout">
 
 ```
-<div class="col-md-5">
+<div class="product-left">
 
-    <img
-        src="{{ product.image.url }}"
-        class="img-fluid rounded shadow"
-        alt="{{ product.name }}"
-    >
+    <div class="product-gallery">
+
+        <div class="gallery-sidebar">
+
+            <img
+                src="{{ product.image.url }}"
+                class="gallery-thumb active-thumb"
+                onclick="changeImage(this)"
+            >
+
+            {% for image in product.gallery.all %}
+
+            <img
+                src="{{ image.image.url }}"
+                class="gallery-thumb"
+                onclick="changeImage(this)"
+            >
+
+            {% endfor %}
+
+        </div>
+
+        <div class="gallery-main">
+
+            <img
+                id="mainProductImage"
+                src="{{ product.image.url }}"
+                class="main-product-image"
+                alt="{{ product.name }}"
+            >
+
+        </div>
+
+    </div>
 
 </div>
 
-<div class="col-md-7">
+<div class="product-right">
 
-    <h1>
+    <h1 class="product-title">
         {{ product.name }}
     </h1>
 
-    <h3 class="text-success mb-3">
-        ₹{{ product.price }}
-    </h3>
+    <div class="product-rating">
 
-    <p>
-        {{ product.description }}
+        ⭐⭐⭐⭐☆
+
+        <span>
+            ({{ reviews.count }} Reviews)
+        </span>
+
+    </div>
+
+    <div class="price-section">
+
+        <span class="current-price">
+
+            ₹{{ product.price }}
+
+        </span>
+
+    </div>
+
+    <div class="product-meta">
+
+        <p>
+
+            <strong>Category:</strong>
+
+            {{ product.category.name }}
+
+        </p>
+
+        {% if product.subcategory %}
+
+        <p>
+
+            <strong>Sub Category:</strong>
+
+            {{ product.subcategory.name }}
+
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% if product.stock > 5 %}
+
+    <p class="text-success fw-bold">
+
+        In Stock:
+        {{ product.stock }}
+
     </p>
 
-    <div class="mb-4">
+    {% elif product.stock > 0 %}
+
+    <p class="text-warning fw-bold">
+
+        Only {{ product.stock }} Left
+
+    </p>
+
+    {% else %}
+
+    <p class="text-danger fw-bold">
+
+        Out Of Stock
+
+    </p>
+
+    {% endif %}
+
+    <div class="product-features">
+
+        <span>🚚 Free Delivery</span>
+
+        <span>↩ Easy Returns</span>
+
+        <span>💵 Cash On Delivery</span>
+
+        <span>🔒 Secure Checkout</span>
+
+    </div>
+
+    <div class="description-box">
+
+        <h5>
+
+            Product Description
+
+        </h5>
+
+        <p>
+
+            {{ product.description }}
+
+        </p>
+
+    </div>
+
+    <div class="mt-4">
+
+        {% if product.stock > 0 %}
 
         <a href="{% url 'add_to_cart' product.id %}"
            class="btn btn-primary">
@@ -37,6 +161,18 @@
             Add To Cart
 
         </a>
+
+        {% else %}
+
+        <button
+            class="btn btn-secondary"
+            disabled>
+
+            Out Of Stock
+
+        </button>
+
+        {% endif %}
 
         <a href="{% url 'add_to_wishlist' product.id %}"
            class="btn btn-outline-danger">
@@ -75,25 +211,11 @@
         name="rating"
         class="form-control">
 
-        <option value="5">
-            ★★★★★
-        </option>
-
-        <option value="4">
-            ★★★★☆
-        </option>
-
-        <option value="3">
-            ★★★☆☆
-        </option>
-
-        <option value="2">
-            ★★☆☆☆
-        </option>
-
-        <option value="1">
-            ★☆☆☆☆
-        </option>
+        <option value="5">★★★★★</option>
+        <option value="4">★★★★☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="1">★☆☆☆☆</option>
 
     </select>
 
@@ -124,11 +246,7 @@
 {% else %}
 
 <p>
-
-```
-Please login to write a review.
-```
-
+    Please login to write a review.
 </p>
 
 {% endif %}
@@ -147,28 +265,20 @@ Please login to write a review.
 <div class="card-body">
 
     <h5>
-
         {{ review.user.username }}
-
     </h5>
 
     <p>
-
         Rating:
         {{ review.rating }}/5 ⭐
-
     </p>
 
     <p>
-
         {{ review.comment }}
-
     </p>
 
     <small class="text-muted">
-
         {{ review.created_at }}
-
     </small>
 
 </div>
@@ -179,11 +289,7 @@ Please login to write a review.
 {% empty %}
 
 <p>
-
-```
-No Reviews Yet
-```
-
+    No Reviews Yet
 </p>
 
 {% endfor %}
@@ -242,5 +348,29 @@ No Reviews Yet
 ```
 
 </div>
+
+<script>
+
+function changeImage(element){
+
+    document.getElementById(
+        "mainProductImage"
+    ).src = element.src;
+
+    document.querySelectorAll(
+        ".gallery-thumb"
+    ).forEach(img => {
+        img.classList.remove(
+            "active-thumb"
+        );
+    });
+
+    element.classList.add(
+        "active-thumb"
+    );
+}
+
+</script>
+
 
 {% endblock %}

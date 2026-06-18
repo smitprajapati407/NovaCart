@@ -6,6 +6,30 @@
     Order #{{ order.id }}
 </h1>
 
+<div class="tracking-container">
+
+    <div class="tracking-step {% if order.status == 'Pending' or order.status == 'Packed' or order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+        ✓
+        <span>Ordered</span>
+    </div>
+
+    <div class="tracking-step {% if order.status == 'Packed' or order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+        ✓
+        <span>Packed</span>
+    </div>
+
+    <div class="tracking-step {% if order.status == 'Shipped' or order.status == 'Delivered' %}active{% endif %}">
+        ✓
+        <span>Shipped</span>
+    </div>
+
+    <div class="tracking-step {% if order.status == 'Delivered' %}active{% endif %}">
+        ✓
+        <span>Delivered</span>
+    </div>
+
+</div>
+
 <p>
     <strong>Status:</strong>
     {{ order.status }}

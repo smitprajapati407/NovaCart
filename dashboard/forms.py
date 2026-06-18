@@ -12,6 +12,7 @@ class ProductForm(forms.ModelForm):
         'name',
         'description',
         'price',
+        'stock',
         'image'
     ]
 
@@ -39,3 +40,16 @@ class SubCategoryForm(forms.ModelForm):
             'category',
             'name'
         ]       
+
+
+from store.models import ProductImage
+
+class ProductImageForm(forms.ModelForm):
+
+    class Meta:
+
+        model = ProductImage
+
+        fields = [
+            'image'
+        ]

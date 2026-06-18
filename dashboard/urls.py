@@ -117,4 +117,11 @@ path(
     views.order_details,
     name='order_details'
 ),
+
+
+  path(
+    'products/<int:product_id>/gallery/add/',
+    views.add_product_image,
+    name='add_product_image'
+),
 ]

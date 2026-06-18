@@ -10,6 +10,13 @@ def add_to_cart(request, product_id):
 
     product = get_object_or_404(Product, id=product_id)
 
+    if product.stock <= 0:
+
+     return redirect(
+        'product_detail',
+        product.id
+    )
+
     user_cart, created = Cart.objects.get_or_create(
         user=request.user
     )
@@ -20,7 +27,11 @@ def add_to_cart(request, product_id):
     )
 
     if not created:
+
+     if cart_item.quantity < product.stock:
+
         cart_item.quantity += 1
+
         cart_item.save()
 
     return redirect('cart')
@@ -61,7 +72,10 @@ def increase_quantity(request, cart_item_id):
         cart__user=request.user
     )
 
-    item.quantity += 1
+    if item.quantity < item.product.stock:
+
+     item.quantity += 1
+
     item.save()
 
     return redirect('cart')
@@ -140,15 +154,20 @@ def place_order(request):
 
         for item in cart_items:
 
-            OrderItem.objects.create(
-                order=order,
-                product=item.product,
-                quantity=item.quantity,
-                price=item.product.price
-            )
+         product = item.product
 
-        cart_items.delete()
+    if product.stock >= item.quantity:
 
+        OrderItem.objects.create(
+            order=order,
+            product=product,
+            quantity=item.quantity,
+            price=product.price
+        )
+
+        product.stock -= item.quantity
+
+        product.save()
         return redirect('order_success')
 def order_success(request):
     return render(

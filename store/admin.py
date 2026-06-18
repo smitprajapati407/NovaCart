@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Categories, SubCategory, Product
+from .models import Categories, SubCategory, Product, ProductImage
 
 
 @admin.register(Categories)
@@ -18,3 +18,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'subcategory', 'price']
     list_filter = ['category', 'subcategory']
     search_fields = ['name']
+
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    list_display = ['product']

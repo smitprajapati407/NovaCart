@@ -32,8 +32,49 @@
                 <h4>{{ item.product.name }}</h4>
 
                 <div class="cart-price">
-                    ₹{{ item.product.price }}
-                </div>
+    ₹{{ item.product.price }}
+</div>
+
+{% if item.product.stock > 5 %}
+
+<p class="text-success">
+
+    In Stock
+    ({{ item.product.stock }} available)
+
+</p>
+
+{% elif item.product.stock > 0 %}
+
+<p class="text-warning">
+
+    Only {{ item.product.stock }} left
+
+</p>
+
+{% else %}
+
+<p class="text-danger">
+
+    Out Of Stock
+
+</p>
+
+{% endif %}
+
+{% if item.quantity > item.product.stock %}
+
+<p class="text-danger fw-bold">
+
+    Only {{ item.product.stock }}
+    available.
+    Please reduce quantity.
+
+</p>
+
+{% endif %}
+
+
 
                 <div class="quantity-wrapper">
 

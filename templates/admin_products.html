@@ -36,6 +36,8 @@
 
             <th>Category</th>
 
+            <th>Stock</th>
+
             <th>Price</th>
 
             <th>Actions</th>
@@ -74,27 +76,61 @@
             </td>
 
             <td>
+
+    {% if product.stock == 0 %}
+
+        <span class="stock-badge out-stock">
+            Out Of Stock
+        </span>
+
+    {% elif product.stock <= 5 %}
+
+        <span class="stock-badge low-stock">
+            {{ product.stock }} Left
+        </span>
+
+    {% else %}
+
+        <span class="stock-badge in-stock">
+            {{ product.stock }}
+        </span>
+
+    {% endif %}
+
+</td>
+            <td>
                 ₹{{ product.price }}
             </td>
 
             <td>
 
-                <a href="{% url 'edit_product' product.id %}"
-                   class="edit-btn">
+    <div class="action-buttons">
 
-                    Edit
+        <a href="{% url 'edit_product' product.id %}"
+           class="edit-btn">
 
-                </a>
+            Edit
 
-                <a href="{% url 'delete_product' product.id %}"
-                   class="delete-btn"
-                   onclick="return confirm('Delete this product?')">
+        </a>
 
-                    Delete
 
-                </a>
+        <a href="{% url 'add_product_image' product.id %}"
+       class="gallery-btn">
 
-            </td>
+        Gallery
+
+    </a>
+
+        <a href="{% url 'delete_product' product.id %}"
+           class="delete-btn">
+
+            Delete
+
+        </a>
+
+    </div>
+
+</td>
 
         </tr>
 

@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from store.models import Product, Categories, SubCategory
+from store.models import Product, Categories, SubCategory, ProductImage
 from order.models import Order
 from django.contrib.auth.models import User
-from .forms import CategoryForm, ProductForm, SubCategoryForm
+from .forms import CategoryForm, ProductForm, SubCategoryForm, ProductImageForm
 from django.db.models import Sum
 
 @login_required
@@ -497,5 +497,49 @@ def order_details(request, order_id):
         'order_details.html',
         {
             'order': order
+        }
+    )
+
+
+
+@login_required
+def add_product_image(request, product_id):
+
+    product = get_object_or_404(
+        Product,
+        id=product_id
+    )
+
+    if request.method == 'POST':
+
+        form = ProductImageForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+
+            gallery = form.save(
+                commit=False
+            )
+
+            gallery.product = product
+
+            gallery.save()
+
+            return redirect(
+                'admin_products'
+            )
+
+    else:
+
+        form = ProductImageForm()
+
+    return render(
+        request,
+        'add_product_image.html',
+        {
+            'form': form,
+            'product': product
         }
     )
