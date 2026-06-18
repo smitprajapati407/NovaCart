@@ -60,7 +60,7 @@ git clone https://github.com/smitprajapati407/NovaCart.git
 Navigate into project:
 
 ```bash
-cd NovaCart
+cd shopify
 ```
 
 Install dependencies:
