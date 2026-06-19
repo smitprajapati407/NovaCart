@@ -4,17 +4,27 @@
 
 <h1>Edit SubCategory</h1>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
     {% csrf_token %}
 
-    {{ form.as_p }}
+    <div class="mb-3">
+        <label>Category</label>
+        {{ form.category }}
+    </div>
 
-    <button type="submit"
-            class="btn btn-primary">
+    <div class="mb-3">
+        <label>Name</label>
+        {{ form.name }}
+    </div>
 
-        Update SubCategory
+    <div class="mb-3">
+        <label>Image</label>
+        {{ form.image }}
+    </div>
 
+    <button type="submit" class="btn btn-success">
+        Edit SubCategory
     </button>
 
 </form>

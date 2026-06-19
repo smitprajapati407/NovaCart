@@ -106,14 +106,14 @@
             </td>
 
             <td>
+                  <div class="action-buttons">
 
                 <a href="{% url 'order_details' order.id %}"
-                   class="view-btn">
+   class="view-btn">
 
-                    View
+    View
 
-                </a>
-
+</a>
                 <a href="{% url 'delete_order' order.id %}"
                    class="delete-btn"
                    onclick="return confirm('Delete this order?')">
@@ -121,6 +121,7 @@
                     Delete
 
                 </a>
+                 </div>
 
             </td>
 

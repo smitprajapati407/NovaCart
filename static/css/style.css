@@ -1708,6 +1708,183 @@ text-align:center;
 }
 
 
+/* =========================
+   ADMIN TABLE DESIGN
+========================= */
+
+.admin-table{
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 25px rgba(0,0,0,0.06);
+}
+
+
+.admin-table table{
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+}
+
+
+/* HEADER */
+
+.admin-table th{
+    background:#111827;
+    color:white;
+    padding:18px 15px;
+    font-size:16px;
+    font-weight:600;
+    text-align:center;
+}
+
+
+/* ROW */
+
+.admin-table td{
+    padding:20px 15px;
+    text-align:center;
+    vertical-align:middle;
+    font-size:15px;
+    border-bottom:1px solid #eee;
+}
+
+
+/* FIX COLUMN WIDTHS */
+
+.admin-table th:nth-child(1),
+.admin-table td:nth-child(1){
+    width:60px;
+}
+
+
+.admin-table th:nth-child(2),
+.admin-table td:nth-child(2){
+    width:120px;
+}
+
+
+.admin-table th:nth-child(3),
+.admin-table td:nth-child(3){
+    width:250px;
+}
+
+
+.admin-table th:nth-child(4),
+.admin-table td:nth-child(4){
+    width:150px;
+}
+
+
+.admin-table th:nth-child(5),
+.admin-table td:nth-child(5){
+    width:120px;
+}
+
+
+.admin-table th:nth-child(6),
+.admin-table td:nth-child(6){
+    width:150px;
+}
+
+
+.admin-table th:nth-child(7),
+.admin-table td:nth-child(7){
+    width:260px;
+}
+
+
+/* PRODUCT IMAGE */
+
+.admin-table img{
+    width:70px;
+    height:70px;
+    object-fit:cover;
+    border-radius:10px;
+}
+
+
+/* ACTION BUTTONS */
+
+.action-buttons{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:15px;
+}
+
+
+.edit-btn,
+.view-btn
+.delete-btn,
+.gallery-btn{
+    width:90px;
+    height:42px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:8px;
+
+    text-decoration:none;
+    font-size:15px;
+    font-weight:500;
+}
+
+
+.edit-btn{
+    background:#2563eb;
+    color:white;
+}
+
+.view-btn{
+    background:white;
+    color: black;
+}
+
+
+
+.gallery-btn{
+    background:#f3f4f6;
+    color:#4f46e5;
+}
+
+
+.delete-btn{
+    background:#dc2626;
+    color:white;
+}
+
+
+/* STOCK BADGES */
+
+.stock-badge{
+    display:inline-block;
+    min-width:55px;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:600;
+}
+
+
+.in-stock{
+    background:#dcfce7;
+    color:#166534;
+}
+
+
+.low-stock{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+
+.out-stock{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
 .admin-wrapper{
     display:flex;
     min-height:100vh;
@@ -1758,28 +1935,11 @@ text-align:center;
     margin-bottom:20px;
 }
 
-.admin-table{
-    background:#fff;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 4px 15px rgba(0,0,0,0.08);
-}
 
-.admin-table table{
-    width:100%;
-    border-collapse:collapse;
-}
 
-.admin-table th{
-    background:#111827;
-    color:white;
-    padding:15px;
-}
 
-.admin-table td{
-    padding:15px;
-    border-bottom:1px solid #eee;
-}
+
+
 
 .add-btn{
     background:#16a34a;
@@ -1900,41 +2060,17 @@ text-align:center;
 }
 
 
-.action-buttons{
-    display:flex;
-    gap:10px;
-    align-items:center;
-    flex-wrap:nowrap;
+
+.gallery-btn{
+    background:#f3f4f6;
+    color:#4f46e5;
 }
 
-.edit-btn,
-.delete-btn{
-    display:inline-block;
-    min-width:80px;
-    text-align:center;
-}
 
-.stock-badge{
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:600;
-}
 
-.in-stock{
-    background:#dcfce7;
-    color:#166534;
-}
 
-.low-stock{
-    background:#fef3c7;
-    color:#92400e;
-}
 
-.out-stock{
-    background:#fee2e2;
-    color:#991b1b;
-}
+
 
 .tracking-container{
     display:flex;

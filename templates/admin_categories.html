@@ -71,6 +71,7 @@
             </td>
 
             <td>
+                <div class="action-buttons">
 
                 <a href="{% url 'edit_category' category.id %}"
                    class="edit-btn">
@@ -79,6 +80,7 @@
 
                 </a>
 
+
                 <a href="{% url 'delete_category' category.id %}"
                    class="delete-btn"
                    onclick="return confirm('Delete this category?')">
@@ -86,6 +88,8 @@
                     Delete
 
                 </a>
+
+                 </div>
 
             </td>
 

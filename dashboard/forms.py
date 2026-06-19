@@ -38,7 +38,9 @@ class SubCategoryForm(forms.ModelForm):
 
         fields = [
             'category',
-            'name'
+            'name',
+            'image'
+            
         ]       
 
 

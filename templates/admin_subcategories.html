@@ -29,6 +29,7 @@
         <tr>
 
             <th>ID</th>
+            <th>Image</th>
 
             <th>Parent Category</th>
 
@@ -49,6 +50,28 @@
             <td>
                 {{ subcategory.id }}
             </td>
+            <td>
+
+    {% if subcategory.image %}
+
+        <img
+            src="{{ subcategory.image.url }}"
+            width="70"
+            height="70"
+            style="object-fit:cover;border-radius:10px;"
+        >
+
+    {% else %}
+
+        <span class="text-muted">
+            No Image
+        </span>
+
+    {% endif %}
+
+</td>
+
+
 
             <td>
                 {{ subcategory.category.name }}
@@ -59,6 +82,7 @@
             </td>
 
             <td>
+                <div class="action-buttons">
 
                 <a href="{% url 'edit_subcategory' subcategory.id %}"
                    class="edit-btn">
@@ -74,6 +98,8 @@
                     Delete
 
                 </a>
+
+                 </div>
 
             </td>
 

@@ -293,6 +293,10 @@ def add_subcategory(request):
         return redirect('profile')
 
     if request.method == 'POST':
+        form = SubCategoryForm(
+            request.POST,
+            request.FILES
+        )
 
         form = SubCategoryForm(
             request.POST
@@ -328,12 +332,13 @@ def edit_subcategory(request, subcategory_id):
     )
 
     if request.method == 'POST':
-
         form = SubCategoryForm(
             request.POST,
+            request.FILES,
             instance=subcategory
         )
 
+        
         if form.is_valid():
 
             form.save()
