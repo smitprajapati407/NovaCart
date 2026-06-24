@@ -60,4 +60,10 @@ path(
     name='order_detail_user'
 ),
 
+path(
+    'invoice/<int:order_id>/',
+    views.download_invoice,
+    name='download_invoice'
+),
+
 ]

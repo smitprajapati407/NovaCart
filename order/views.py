@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Cart, CartItem
 from store.models import Product
 from .models import Wishlist, Order
+from django.http import HttpResponse
+from reportlab.pdfgen import canvas
 
 
 @login_required
@@ -168,6 +170,9 @@ def place_order(request):
         product.stock -= item.quantity
 
         product.save()
+
+        cart_items.delete()
+
         return redirect('order_success')
 def order_success(request):
     return render(
@@ -285,3 +290,310 @@ def order_detail_user(request, order_id):
             'order': order
         }
     )
+
+@login_required
+def download_invoice(request, order_id):
+
+    order = get_object_or_404(
+        Order,
+        id=order_id,
+        user=request.user
+    )
+
+    response = HttpResponse(
+        content_type='application/pdf'
+    )
+
+    response[
+        'Content-Disposition'
+    ] = f'attachment; filename="NovaCart_Invoice_{order.id}.pdf"'
+
+    pdf = canvas.Canvas(response)
+
+    # ==========================
+    # HEADER
+    # ==========================
+
+    pdf.setFillColorRGB(
+        0.05,
+        0.1,
+        0.2
+    )
+
+    pdf.rect(
+        0,
+        770,
+        700,
+        50,
+        fill=1
+    )
+
+    pdf.setFillColorRGB(
+        1,
+        1,
+        1
+    )
+
+    pdf.setFont(
+        "Helvetica-Bold",
+        22
+    )
+
+    pdf.drawString(
+        40,
+        790,
+        "NovaCart Invoice"
+    )
+
+    # ==========================
+    # CUSTOMER DETAILS
+    # ==========================
+
+    pdf.setFillColorRGB(
+        0,
+        0,
+        0
+    )
+
+    pdf.setFont(
+        "Helvetica-Bold",
+        12
+    )
+
+    pdf.drawString(
+        40,
+        735,
+        "Customer Details"
+    )
+
+    pdf.rect(
+        35,
+        620,
+        520,
+        95
+    )
+
+    pdf.setFont(
+        "Helvetica",
+        11
+    )
+
+    pdf.drawString(
+        50,
+        690,
+        f"Name: {order.full_name}"
+    )
+
+    pdf.drawString(
+        50,
+        670,
+        f"Phone: {order.phone}"
+    )
+
+    pdf.drawString(
+        50,
+        650,
+        f"Order ID: {order.id}"
+    )
+
+    pdf.drawString(
+        300,
+        690,
+        f"Status: {order.status}"
+    )
+
+    pdf.drawString(
+        300,
+        670,
+        f"Payment: {order.payment_method}"
+    )
+
+    pdf.drawString(
+        300,
+        650,
+        f"Date: {order.created_at.strftime('%d-%m-%Y')}"
+    )
+
+    # ==========================
+    # ADDRESS
+    # ==========================
+
+    pdf.setFont(
+        "Helvetica-Bold",
+        12
+    )
+
+    pdf.drawString(
+        40,
+        590,
+        "Delivery Address"
+    )
+
+    pdf.setFont(
+        "Helvetica",
+        11
+    )
+
+    pdf.drawString(
+        50,
+        570,
+        order.address[:70]
+    )
+
+    pdf.drawString(
+        50,
+        550,
+        f"{order.city}, {order.state} - {order.pincode}"
+    )
+
+    # ==========================
+    # PRODUCT TABLE HEADER
+    # ==========================
+
+    pdf.setFillColorRGB(
+        0.05,
+        0.1,
+        0.2
+    )
+
+    pdf.rect(
+        35,
+        500,
+        520,
+        30,
+        fill=1
+    )
+
+    pdf.setFillColorRGB(
+        1,
+        1,
+        1
+    )
+
+    pdf.setFont(
+        "Helvetica-Bold",
+        11
+    )
+
+    pdf.drawString(
+        50,
+        510,
+        "Product"
+    )
+
+    pdf.drawString(
+        320,
+        510,
+        "Qty"
+    )
+
+    pdf.drawString(
+        420,
+        510,
+        "Price"
+    )
+
+    # ==========================
+    # PRODUCT ROWS
+    # ==========================
+
+    y = 470
+
+    pdf.setFillColorRGB(
+        0,
+        0,
+        0
+    )
+
+    pdf.setFont(
+        "Helvetica",
+        11
+    )
+
+    for item in order.items.all():
+
+        pdf.drawString(
+            50,
+            y,
+            item.product.name[:35]
+        )
+
+        pdf.drawString(
+            330,
+            y,
+            str(item.quantity)
+        )
+
+        pdf.drawString(
+            420,
+            y,
+            f"Rs. {item.price}"
+        )
+
+        y -= 25
+
+    # ==========================
+    # TOTAL BOX
+    # ==========================
+
+    pdf.setFillColorRGB(
+        0.10,
+        0.65,
+        0.30
+    )
+
+    pdf.rect(
+        350,
+        y - 20,
+        200,
+        40,
+        fill=1
+    )
+
+    pdf.setFillColorRGB(
+        1,
+        1,
+        1
+    )
+
+    pdf.setFont(
+        "Helvetica-Bold",
+        14
+    )
+
+    pdf.drawString(
+        370,
+        y,
+        f"Total: Rs. {order.total_price}"
+    )
+
+    # ==========================
+    # FOOTER
+    # ==========================
+
+    pdf.setFillColorRGB(
+        0,
+        0,
+        0
+    )
+
+    pdf.setFont(
+        "Helvetica-Oblique",
+        10
+    )
+
+    pdf.drawString(
+        40,
+        50,
+        "Thank you for shopping with NovaCart!"
+    )
+
+    pdf.drawString(
+        40,
+        35,
+        "This is a computer generated invoice."
+    )
+
+    pdf.save()
+
+    return response

@@ -13,13 +13,23 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+          <meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
 
+<button class="mobile-menu-btn"
+        onclick="toggleSidebar()">
+
+    <i class="fas fa-bars"></i>
+
+</button>
 <div class="admin-wrapper">
 
-    <div class="admin-sidebar">
+    <div class="admin-sidebar"
+     id="adminSidebar">
 
         <h2>
             NovaCart
@@ -71,5 +81,17 @@
 
 </div>
 
+<script>
+
+function toggleSidebar(){
+
+    document
+        .getElementById("adminSidebar")
+        .classList
+        .toggle("show-sidebar");
+
+}
+
+</script>
 </body>
 </html>

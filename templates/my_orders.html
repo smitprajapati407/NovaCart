@@ -36,14 +36,29 @@
 
         <td>
 
-            <a href="{% url 'order_detail_user' order.id %}"
-               class="btn btn-primary btn-sm">
+    <div class="order-actions">
 
-                View
+        <a href="{% url 'order_detail_user' order.id %}"
+           class="view-btn">
 
-            </a>
+            <i class="fas fa-eye"></i>
 
-        </td>
+            View
+
+        </a>
+
+        <a href="{% url 'download_invoice' order.id %}"
+           class="invoice-btn">
+
+            <i class="fas fa-file-invoice"></i>
+
+            Invoice
+
+        </a>
+
+    </div>
+
+</td>
 
     </tr>
 
