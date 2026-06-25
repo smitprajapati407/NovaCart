@@ -1,0 +1,31 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<h1>Add SubCategory</h1>
+
+<form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    <div class="mb-3">
+        <label>Category</label>
+        {{ form.category }}
+    </div>
+
+    <div class="mb-3">
+        <label>Name</label>
+        {{ form.name }}
+    </div>
+
+    <div class="mb-3">
+        <label>Image</label>
+        {{ form.image }}
+    </div>
+
+    <button type="submit" class="btn btn-success">
+        Add SubCategory
+    </button>
+
+</form>
+{% endblock %}

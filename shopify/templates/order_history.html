@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    My Orders
+</h1>
+
+{% if orders %}
+
+
+{% for order in orders %}
+
+<div class="order-card">
+
+    <h4>
+        Order {{ order.id }}
+    </h4>
+
+    <p>
+        <strong>Date:</strong>
+        {{ order.created_at }}
+    </p>
+
+    <p>
+        <strong>Total:</strong>
+        ₹{{ order.total_price }}
+    </p>
+
+    <p>
+        <strong>Payment:</strong>
+        {{ order.payment_method }}
+    </p>
+
+    <p>
+        <strong>Address:</strong>
+        {{ order.address }},
+        {{ order.city }},
+        {{ order.state }}
+    </p>
+
+</div>
+
+{% endfor %}
+
+
+{% else %}
+
+
+<div class="empty-orders">
+
+    <h3>
+        No Orders Yet
+    </h3>
+
+    <p>
+        Place your first order to see it here.
+    </p>
+
+</div>
+
+
+{% endif %}
+
+{% endblock %}

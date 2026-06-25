@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class="product-detail-layout">
+
+
+<div class="product-left">
+
+    <div class="product-gallery">
+
+        <div class="gallery-sidebar">
+
+            <img
+                src="{{ product.image.url }}"
+                class="gallery-thumb active-thumb"
+                onclick="changeImage(this)"
+            >
+
+            {% for image in product.gallery.all %}
+
+            <img
+                src="{{ image.image.url }}"
+                class="gallery-thumb"
+                onclick="changeImage(this)"
+            >
+
+            {% endfor %}
+
+        </div>
+
+        <div class="gallery-main">
+
+            <img
+                id="mainProductImage"
+                src="{{ product.image.url }}"
+                class="main-product-image"
+                alt="{{ product.name }}"
+            >
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="product-right">
+
+    <h1 class="product-title">
+        {{ product.name }}
+    </h1>
+
+    <div class="product-rating">
+
+        ⭐⭐⭐⭐☆
+
+        <span>
+            ({{ reviews.count }} Reviews)
+        </span>
+
+    </div>
+
+    <div class="price-section">
+
+        <span class="current-price">
+
+            ₹{{ product.price }}
+
+        </span>
+
+    </div>
+
+    <div class="product-meta">
+
+        <p>
+
+            <strong>Category:</strong>
+
+            {{ product.category.name }}
+
+        </p>
+
+        {% if product.subcategory %}
+
+        <p>
+
+            <strong>Sub Category:</strong>
+
+            {{ product.subcategory.name }}
+
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% if product.stock > 5 %}
+
+    <p class="text-success fw-bold">
+
+        In Stock:
+        {{ product.stock }}
+
+    </p>
+
+    {% elif product.stock > 0 %}
+
+    <p class="text-warning fw-bold">
+
+        Only {{ product.stock }} Left
+
+    </p>
+
+    {% else %}
+
+    <p class="text-danger fw-bold">
+
+        Out Of Stock
+
+    </p>
+
+    {% endif %}
+
+    <div class="product-features">
+
+        <span>🚚 Free Delivery</span>
+
+        <span>↩ Easy Returns</span>
+
+        <span>💵 Cash On Delivery</span>
+
+        <span>🔒 Secure Checkout</span>
+
+    </div>
+
+    <div class="description-box">
+
+        <h5>
+
+            Product Description
+
+        </h5>
+
+        <p>
+
+            {{ product.description }}
+
+        </p>
+
+    </div>
+
+    <div class="mt-4">
+
+        {% if product.stock > 0 %}
+
+        <a href="{% url 'add_to_cart' product.id %}"
+           class="btn btn-primary">
+
+            Add To Cart
+
+        </a>
+
+        {% else %}
+
+        <button
+            class="btn btn-secondary"
+            disabled>
+
+            Out Of Stock
+
+        </button>
+
+        {% endif %}
+
+        <a href="{% url 'add_to_wishlist' product.id %}"
+           class="btn btn-outline-danger">
+
+            ❤ Wishlist
+
+        </a>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<hr>
+
+<h3 class="mb-4">
+    Write Review
+</h3>
+
+{% if user.is_authenticated %}
+
+<form method="POST">
+
+
+{% csrf_token %}
+
+<div class="mb-3">
+
+    <label class="form-label">
+        Rating
+    </label>
+
+    <select
+        name="rating"
+        class="form-control">
+
+        <option value="5">★★★★★</option>
+        <option value="4">★★★★☆</option>
+        <option value="3">★★★☆☆</option>
+        <option value="2">★★☆☆☆</option>
+        <option value="1">★☆☆☆☆</option>
+
+    </select>
+
+</div>
+
+<div class="mb-3">
+
+    <textarea
+        name="comment"
+        class="form-control"
+        rows="4"
+        placeholder="Write your review here">
+    </textarea>
+
+</div>
+
+<button
+    type="submit"
+    class="btn btn-success">
+
+    Submit Review
+
+</button>
+
+
+</form>
+
+{% else %}
+
+<p>
+    Please login to write a review.
+</p>
+
+{% endif %}
+
+<hr>
+
+<h3 class="mb-4">
+    Customer Reviews
+</h3>
+
+{% for review in reviews %}
+
+<div class="card mb-3">
+
+
+<div class="card-body">
+
+    <h5>
+        {{ review.user.username }}
+    </h5>
+
+    <p>
+        Rating:
+        {{ review.rating }}/5 ⭐
+    </p>
+
+    <p>
+        {{ review.comment }}
+    </p>
+
+    <small class="text-muted">
+        {{ review.created_at }}
+    </small>
+
+</div>
+
+
+</div>
+
+{% empty %}
+
+<p>
+    No Reviews Yet
+</p>
+
+{% endfor %}
+
+<hr class="my-5">
+
+<h3 class="mb-4">
+    Related Products
+</h3>
+
+<div class="row">
+
+
+{% for item in related_products %}
+
+<div class="col-md-3 mb-4">
+
+    <div class="card h-100">
+
+        <a href="{% url 'product_detail' item.id %}">
+
+            <img
+                src="{{ item.image.url }}"
+                class="card-img-top"
+                alt="{{ item.name }}"
+            >
+
+        </a>
+
+        <div class="card-body">
+
+            <h6>
+
+                <a href="{% url 'product_detail' item.id %}"
+                   class="text-dark text-decoration-none">
+
+                    {{ item.name }}
+
+                </a>
+
+            </h6>
+
+            <p class="text-success">
+
+                ₹{{ item.price }}
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+
+</div>
+
+<script>
+
+function changeImage(element){
+
+    document.getElementById(
+        "mainProductImage"
+    ).src = element.src;
+
+    document.querySelectorAll(
+        ".gallery-thumb"
+    ).forEach(img => {
+        img.classList.remove(
+            "active-thumb"
+        );
+    });
+
+    element.classList.add(
+        "active-thumb"
+    );
+}
+
+</script>
+
+
+{% endblock %}

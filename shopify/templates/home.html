@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if query %}
+
+<section class="search-results-section">
+
+    <div class="container">
+
+        <h2>Search Results for "{{ query }}"</h2>
+
+        {% if categories %}
+            <h3>Categories</h3>
+
+            <div class="category-grid">
+
+                {% for category in categories %}
+
+                    <a href="/products/{{ category.id }}/" class="category-item">
+
+                        <img src="{{ category.image.url }}"
+                             alt="{{ category.name }}"
+                             style="width:100%;height:180px;object-fit:cover;">
+
+                        <h5>{{ category.name }}</h5>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+        {% endif %}
+
+        {% if products %}
+            <h3>Products</h3>
+
+            <div class="product-grid">
+
+                {% for product in products %}
+
+                    <div class="product-card">
+
+                        <img src="{{ product.image.url }}"
+                             alt="{{ product.name }}"
+                             style="width:100%;height:220px;object-fit:cover;">
+
+                        <h5>{{ product.name }}</h5>
+
+                        <p>₹{{ product.price }}</p>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        {% endif %}
+
+        {% if not categories and not products %}
+            <div class="text-center py-5">
+                <h3>No Results Found 😔</h3>
+                <p>Try searching for another category or product.</p>
+            </div>
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endif %}
+
+<!-- HERO SECTION -->
+
+<section class="hero-section">
+
+    <div class="hero-left">
+
+        <span class="hero-tag">
+            NEW ARRIVALS 2026
+        </span>
+
+        <h1>
+            Discover Fashion, Electronics & More
+        </h1>
+
+        <p>
+            Shop the latest trends with unbeatable prices,
+            fast delivery and secure checkout.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="/categories/" class="btn-shop">
+                Shop Now
+            </a>
+
+            <a href="/categories/" class="btn-outline-shop">
+                Browse Categories
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="hero-right">
+
+        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b"
+             alt="Shopping">
+
+    </div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features-section">
+
+    <div class="feature-box">
+        <i class="fas fa-truck"></i>
+        <h5>Fast Delivery</h5>
+        <p>Get products delivered quickly.</p>
+    </div>
+
+    <div class="feature-box">
+        <i class="fas fa-shield-alt"></i>
+        <h5>Secure Payments</h5>
+        <p>100% secure checkout process.</p>
+    </div>
+
+    <div class="feature-box">
+        <i class="fas fa-rotate-left"></i>
+        <h5>Easy Returns</h5>
+        <p>Hassle free returns and refunds.</p>
+    </div>
+
+    <div class="feature-box">
+        <i class="fas fa-headset"></i>
+        <h5>24/7 Support</h5>
+        <p>Always available for assistance.</p>
+    </div>
+
+</section>
+
+<!-- SHOP BY CATEGORY -->
+
+<section class="category-preview">
+
+    <h2 class="section-title">
+        Shop By Category
+    </h2>
+
+    <div class="category-grid">
+
+        <div class="category-item">
+            <i class="fas fa-shirt"></i>
+            <h5>Fashion</h5>
+        </div>
+
+        <div class="category-item">
+            <i class="fas fa-mobile-screen"></i>
+            <h5>Electronics</h5>
+        </div>
+
+        <div class="category-item">
+            <i class="fas fa-couch"></i>
+            <h5>Furniture</h5>
+        </div>
+
+        <div class="category-item">
+            <i class="fas fa-gift"></i>
+            <h5>Accessories</h5>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- PROMO SECTION -->
+
+<section class="promo-section">
+
+    <div class="promo-card">
+
+        <h3>Summer Sale</h3>
+
+        <p>
+            Up to 50% Off on selected products.
+        </p>
+
+    </div>
+
+    <div class="promo-card">
+
+        <h3>New Collection</h3>
+
+        <p>
+            Explore newly launched products.
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

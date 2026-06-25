@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="products-header">
+
+
+<h1>{{ category.name }}</h1>
+
+<p>
+    Explore our latest collection.
+</p>
+
+
+</div>
+
+{% if products %}
+
+<div class="products-layout">
+
+
+<!-- LEFT SIDEBAR -->
+
+<aside class="filters-sidebar">
+
+    <h4>Filters</h4>
+
+    <form method="GET">
+
+        <select name="subcategory">
+
+            <option value="">
+                All Subcategories
+            </option>
+
+            {% for sub in subcategories %}
+
+            <option value="{{ sub.id }}">
+                {{ sub.name }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <select name="sort">
+
+            <option value="">
+                Sort By
+            </option>
+
+            <option value="low">
+                Price: Low to High
+            </option>
+
+            <option value="high">
+                Price: High to Low
+            </option>
+
+            <option value="name_asc">
+                Name: A to Z
+            </option>
+
+            <option value="name_desc">
+                Name: Z to A
+            </option>
+
+        </select>
+
+        <input
+            type="number"
+            name="min_price"
+            placeholder="Min Price">
+
+        <input
+            type="number"
+            name="max_price"
+            placeholder="Max Price">
+
+        <button type="submit">
+            Apply Filters
+        </button>
+
+    </form>
+
+</aside>
+
+<!-- PRODUCTS -->
+
+<div class="products-content">
+
+    <div class="products-grid">
+
+        {% for product in products %}
+
+        <div class="shop-product-card">
+
+            <div class="shop-product-image">
+
+                <a href="{% url 'product_detail' product.id %}">
+    <img
+        src="{{ product.image.url }}"
+        alt="{{ product.name }}"
+    >
+</a>
+
+            </div>
+
+            <div class="shop-product-content">
+
+                <h5>
+    <a href="{% url 'product_detail' product.id %}">
+        {{ product.name }}
+    </a>
+</h5>
+
+                <p>
+                    {{ product.description|truncatewords:12 }}
+                </p>
+
+                <div class="product-bottom">
+
+                    <span class="shop-price">
+                        ₹{{ product.price }}
+                    </span>
+
+                </div>
+
+                <div class="product-actions">
+
+                    <a href="{% url 'add_to_cart' product.id %}"
+                       class="add-cart-btn">
+                        Add To Cart
+                    </a>
+
+                    <a href="{% url 'add_to_wishlist' product.id %}"
+                       class="wishlist-btn">
+
+                        <i class="far fa-heart"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+
+</div>
+
+{% else %}
+
+<div class="empty-products-box">
+
+
+<i class="fas fa-box-open"></i>
+
+<h3>
+    No Products Available
+</h3>
+
+<p>
+    New products will be added soon.
+</p>
+
+
+</div>
+
+{% endif %}
+
+{% endblock %}

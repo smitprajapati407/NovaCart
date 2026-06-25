@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="checkout-page">
+
+    <h1 class="checkout-page-title">
+        Checkout
+    </h1>
+
+    <div class="checkout-layout">
+
+        <!-- SHIPPING DETAILS -->
+
+        <div class="checkout-form-card">
+
+            <h3>
+                Shipping Details
+            </h3>
+
+            <form method="POST" action="{% url 'place_order' %}">
+
+                {% csrf_token %}
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="full_name"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        class="form-control"
+                        rows="4"
+                        required
+                    ></textarea>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            City
+                        </label>
+
+                        <input
+                            type="text"
+                            name="city"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            State
+                        </label>
+
+                        <input
+                            type="text"
+                            name="state"
+                            class="form-control"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Pincode
+                    </label>
+
+                    <input
+                        type="text"
+                        name="pincode"
+                        class="form-control"
+                        required
+                    >
+
+                </div>
+
+        </div>
+
+        <!-- ORDER SUMMARY -->
+
+        <div>
+
+            <div class="checkout-summary-card">
+
+                <h4>
+                    Price Details
+                </h4>
+
+                <hr>
+
+                <div class="checkout-total-row">
+
+                    <span>Total Amount</span>
+
+                    <strong>₹{{ total }}</strong>
+
+                </div>
+
+                <div class="payment-method-box">
+
+                    <h6>
+                        Payment Method
+                    </h6>
+
+                    <div class="payment-option-box">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="COD"
+                            checked
+                        >
+
+                        <label>
+                            Cash On Delivery
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="place-order-btn">
+                    Place Order
+                </button>
+
+            </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

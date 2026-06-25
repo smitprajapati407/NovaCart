@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="order-success-page">
+
+    <div class="order-success-card">
+
+        <div class="success-checkmark">
+            <i class="fas fa-check"></i>
+        </div>
+
+        <h1>Order Placed Successfully!</h1>
+
+        <p class="success-text">
+            Thank you for shopping with NovaCart. Your order has been received and is now being processed.
+        </p>
+
+        <div class="success-details">
+
+            <div class="success-detail-box">
+
+                <h6>Order Status</h6>
+
+                <p>Confirmed</p>
+
+            </div>
+
+            <div class="success-detail-box">
+
+                <h6>Estimated Delivery</h6>
+
+                <p>3 - 5 Business Days</p>
+
+            </div>
+
+            <div class="success-detail-box">
+
+                <h6>Payment</h6>
+
+                <p>Cash On Delivery</p>
+
+            </div>
+
+        </div>
+
+        <a href="{% url 'home' %}"
+           class="continue-shopping-btn">
+
+            Continue Shopping
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

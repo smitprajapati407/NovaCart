@@ -1,0 +1,215 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<h1 class="mb-4">
+    Admin Dashboard
+</h1>
+
+<div class="dashboard-cards">
+
+    <div class="dashboard-card">
+        <h3>{{ total_products }}</h3>
+        <p>Products</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>{{ total_categories }}</h3>
+        <p>Categories</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>{{ total_subcategories }}</h3>
+        <p>Sub Categories</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>{{ total_orders }}</h3>
+        <p>Orders</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>{{ total_users }}</h3>
+        <p>Users</p>
+    </div>
+
+
+    <div class="dashboard-card">
+    <h3>₹{{ total_revenue }}</h3>
+    <p>Revenue</p>
+</div>
+
+<div class="dashboard-card">
+    <h3>{{ pending_orders }}</h3>
+    <p>Pending Orders</p>
+</div>
+
+<div class="dashboard-card">
+    <h3>{{ delivered_orders }}</h3>
+    <p>Delivered Orders</p>
+</div>
+
+  <div class="dashboard-links">
+
+    <a href="{% url 'admin_products' %}" class="dashboard-btn">
+        <i class="fas fa-box"></i>
+        Products
+    </a>
+
+    <a href="{% url 'admin_categories' %}" class="dashboard-btn">
+        <i class="fas fa-layer-group"></i>
+        Categories
+    </a>
+
+    <a href="{% url 'admin_subcategories' %}" class="dashboard-btn">
+        <i class="fas fa-tags"></i>
+        Sub Categories
+    </a>
+
+    <a href="{% url 'admin_users' %}" class="dashboard-btn">
+        <i class="fas fa-users"></i>
+        Users
+    </a>
+
+    <a href="{% url 'admin_orders' %}"
+   class="dashboard-btn">
+
+    <i class="fas fa-clipboard-list"></i>
+
+    Orders
+
+</a>
+
+</div>
+
+</div>
+
+<h3 class="mt-5">
+    Recent Orders
+</h3>
+
+<h2 class="section-title">
+    Recent Orders
+</h2>
+
+<div class="admin-table">
+
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>Order ID</th>
+
+            <th>Customer</th>
+
+            <th>Total</th>
+
+            <th>Status</th>
+
+            <th>Date</th>
+
+            <th>Action</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for order in recent_orders %}
+
+        <tr>
+
+            <td>
+                #{{ order.id }}
+            </td>
+
+            <td>
+                {{ order.full_name }}
+            </td>
+
+            <td>
+                ₹{{ order.total_price }}
+            </td>
+
+            <td>
+
+                {% if order.status == 'Pending' %}
+
+                    <span class="status-badge pending">
+
+                        Pending
+
+                    </span>
+
+                {% elif order.status == 'Packed' %}
+
+                    <span class="status-badge packed">
+
+                        Packed
+
+                    </span>
+
+                {% elif order.status == 'Shipped' %}
+
+                    <span class="status-badge shipped">
+
+                        Shipped
+
+                    </span>
+
+                {% elif order.status == 'Delivered' %}
+
+                    <span class="status-badge delivered">
+
+                        Delivered
+
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+            <td>
+                {{ order.created_at|date:"d M Y" }}
+            </td>
+
+            <td>
+
+                <a href="{% url 'order_details' order.id %}"
+                   class="view-btn">
+
+                    View
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="6">
+
+                No Recent Orders
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+
+</div>
+
+
+{% endblock %}

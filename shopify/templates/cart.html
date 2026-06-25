@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1 class="cart-page-title">
+    Shopping Cart
+</h1>
+
+{% if cart_items %}
+
+<div class="cart-layout">
+
+    <!-- CART ITEMS -->
+
+    <div>
+
+        {% for item in cart_items %}
+
+        <div class="cart-item-card">
+
+            <div class="cart-item-image">
+
+                <img
+                    src="{{ item.product.image.url }}"
+                    alt="{{ item.product.name }}"
+                >
+
+            </div>
+
+            <div class="cart-item-info">
+
+                <h4>{{ item.product.name }}</h4>
+
+                <div class="cart-price">
+    ₹{{ item.product.price }}
+</div>
+
+{% if item.product.stock > 5 %}
+
+<p class="text-success">
+
+    In Stock
+    ({{ item.product.stock }} available)
+
+</p>
+
+{% elif item.product.stock > 0 %}
+
+<p class="text-warning">
+
+    Only {{ item.product.stock }} left
+
+</p>
+
+{% else %}
+
+<p class="text-danger">
+
+    Out Of Stock
+
+</p>
+
+{% endif %}
+
+{% if item.quantity > item.product.stock %}
+
+<p class="text-danger fw-bold">
+
+    Only {{ item.product.stock }}
+    available.
+    Please reduce quantity.
+
+</p>
+
+{% endif %}
+
+
+
+                <div class="quantity-wrapper">
+
+                    <a href="{% url 'decrease_quantity' item.id %}"
+                       class="qty-btn">
+                        -
+                    </a>
+
+                    <span class="qty-value">
+                        {{ item.quantity }}
+                    </span>
+
+                    <a href="{% url 'increase_quantity' item.id %}"
+                       class="qty-btn">
+                        +
+                    </a>
+
+                    <a href="{% url 'remove_from_cart' item.id %}"
+   class="remove-cart-btn">
+
+    <i class="fas fa-trash"></i>
+
+    Remove
+
+</a>
+
+                </div>
+
+                <div class="subtotal-text">
+                    Subtotal: ₹{{ item.get_subtotal }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <!-- SUMMARY -->
+
+    <div>
+
+        <div class="cart-summary-card">
+
+            <h4>Price Details</h4>
+
+            <hr>
+
+            <div class="summary-row">
+                <span>Total Amount</span>
+                <strong>₹{{ total_price }}</strong>
+            </div>
+
+            <a href="{% url 'checkout' %}"
+               class="checkout-button">
+                Proceed To Checkout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% else %}
+
+<div class="empty-cart-wrapper">
+
+    <i class="fas fa-shopping-bag empty-cart-icon"></i>
+
+    <h2>Your Cart Is Empty</h2>
+
+    <p>
+        Add some products and come back here.
+    </p>
+
+    <a href="/categories/" class="btn-shop">
+        Continue Shopping
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,158 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<div class="admin-header">
+
+
+<h1>
+    Manage Products
+</h1>
+
+<a href="{% url 'add_product' %}"
+   class="add-btn">
+
+    + Add Product
+
+</a>
+
+
+</div>
+
+<div class="admin-table">
+
+
+<table>
+
+    <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Image</th>
+
+            <th>Name</th>
+
+            <th>Category</th>
+
+            <th>Stock</th>
+
+            <th>Price</th>
+
+            <th>Actions</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for product in products %}
+
+        <tr>
+
+            <td>
+                {{ product.id }}
+            </td>
+
+            <td>
+
+                <img
+                    src="{{ product.image.url }}"
+                    width="60"
+                    height="60"
+                    style="object-fit:cover;border-radius:8px;"
+                >
+
+            </td>
+
+            <td>
+                {{ product.name }}
+            </td>
+
+            <td>
+                {{ product.category.name }}
+            </td>
+
+            <td>
+
+    {% if product.stock == 0 %}
+
+        <span class="stock-badge out-stock">
+            Out Of Stock
+        </span>
+
+    {% elif product.stock <= 5 %}
+
+        <span class="stock-badge low-stock">
+            {{ product.stock }} Left
+        </span>
+
+    {% else %}
+
+        <span class="stock-badge in-stock">
+            {{ product.stock }}
+        </span>
+
+    {% endif %}
+
+</td>
+            <td>
+                ₹{{ product.price }}
+            </td>
+
+            <td>
+
+    <div class="action-buttons">
+
+        <a href="{% url 'edit_product' product.id %}"
+           class="edit-btn">
+
+            Edit
+
+        </a>
+
+
+        <a href="{% url 'add_product_image' product.id %}"
+       class="gallery-btn">
+
+        Gallery
+
+    </a>
+
+        <a href="{% url 'delete_product' product.id %}"
+           class="delete-btn">
+
+            Delete
+
+        </a>
+
+    </div>
+
+</td>
+
+        </tr>
+
+        {% empty %}
+
+        <tr>
+
+            <td colspan="6">
+
+                No Products Found
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+
+</div>
+
+{% endblock %}

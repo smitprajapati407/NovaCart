@@ -1,0 +1,46 @@
+{% extends 'dashboard_base.html' %}
+
+{% block content %}
+
+<div class="admin-header">
+
+
+<h1>
+
+    Product Gallery
+
+</h1>
+
+
+</div>
+
+<div class="form-card">
+
+
+<h3>
+
+    {{ product.name }}
+
+</h3>
+
+<form method="POST"
+      enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <button
+        type="submit"
+        class="add-btn">
+
+        Upload Image
+
+    </button>
+
+</form>
+
+
+</div>
+
+{% endblock %}

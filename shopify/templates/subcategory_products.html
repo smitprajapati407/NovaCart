@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">
+    {{ subcategory.name }}
+</h2>
+
+<div class="row">
+
+    {% for product in products %}
+
+    <div class="col-md-3 mb-4">
+
+        <div class="card h-100">
+
+            <img src="{{ product.image.url }}"
+                 class="card-img-top"
+                 alt="{{ product.name }}">
+
+            <div class="card-body">
+
+                <h5>{{ product.name }}</h5>
+
+                <p>₹{{ product.price }}</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% empty %}
+
+    <p>No products available.</p>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

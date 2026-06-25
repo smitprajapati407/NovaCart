@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="categories-header">
+    {% if products or categories %}
+        <h1>Search Results</h1>
+        <p>
+            Results for "<strong>{{ query }}</strong>"
+        </p>
+    {% else %}
+        <h1>No Results Found</h1>
+        <p>
+            No results found for "<strong>{{ query }}</strong>"
+        </p>
+    {% endif %}
+</div>
+
+    {% if categories %}
+
+    <h2 class="mb-4">Matching Categories</h2>
+
+    <div class="categories-grid">
+
+        {% for category in categories %}
+
+        <a href="{% url 'products' category.id %}" class="category-box">
+
+            <div class="category-image-wrapper">
+
+                <img src="{{ category.image.url }}"
+                     alt="{{ category.name }}">
+
+            </div>
+
+            <div class="category-content">
+
+                <h4>{{ category.name }}</h4>
+
+                <p>
+                    {{ category.description|truncatewords:12 }}
+                </p>
+
+                <span class="category-btn">
+                    Explore
+                </span>
+
+            </div>
+
+        </a>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+    {% if products %}
+
+    <h2 class="mt-5 mb-4">Matching Products</h2>
+
+    <div class="categories-grid">
+
+        {% for product in products %}
+
+        <div class="category-box">
+
+            <div class="category-image-wrapper">
+
+                <img src="{{ product.image.url }}"
+                     alt="{{ product.name }}">
+
+            </div>
+
+            <div class="category-content">
+
+                <h4>{{ product.name }}</h4>
+
+                <p>
+                    {{ product.description|truncatewords:12 }}
+                </p>
+
+                <p>
+                    ₹{{ product.price }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    {% endif %}
+
+    {% if not categories and not products %}
+
+    <div class="text-center py-5">
+
+        <h2>No Results Found 😔</h2>
+
+        <p>
+            No categories or products match "{{ query }}"
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
