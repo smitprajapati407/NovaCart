@@ -86,7 +86,7 @@
 
             <!-- Search -->
 
-            <form class="search-form mx-auto" method="GET" action="{% url 'search' %}">
+            <form class="search-form" method="GET" action="{% url 'search' %}">
                 <div class="search-wrapper">
 
                     <i class="fas fa-search"></i>
@@ -94,14 +94,14 @@
                     <input type="text"
                            value="{{ query }}"
                            name="q"
-                           placeholder="Search For the brands and products">
+                           placeholder="Search products...">
 
                 </div>
             </form>
 
             <!-- Right Side -->
 
-            <ul class="navbar-nav align-items-center">
+            <ul class="navbar-nav ms-auto align-items-lg-center align-items-start">
 
     <li class="nav-item">
         <a class="nav-link" href="{% url 'wishlist' %}">
@@ -140,9 +140,10 @@
 </li>
 
                 <li class="nav-item">
-                    <a href="{% url 'logout' %}" class="btn btn-outline-dark btn-sm ms-2">
-                        Logout
-                    </a>
+                    <a href="{% url 'logout' %}" class="nav-link text-danger">
+    Logout
+</a>
+       
                 </li>
 
                 {% else %}
